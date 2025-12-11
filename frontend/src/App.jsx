@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 import SaltWorker from './saltWorker?worker'; // Vite worker import
 
-const FACTORY_ADDRESS = "0x875805B5ADdDB38f4e3496d868E1AC1fc06E59AC";
+const FACTORY_ADDRESS = "0xb72c1Af569dC4313839067808f3e51aFb21E7Bc8";
 const SEI_TESTNET_CHAIN_ID = '0x530'; // 1328
 const SEI_RPC = "https://sei-testnet.g.alchemy.com/v2/iQEF9jQ4XvJyDIQMzYOvAPUvfWFSAvD1";
 
@@ -114,6 +114,10 @@ function App() {
         workerRef.current.terminate();
       } else if (type === 'progress') {
         setComputeProgress(parseInt(count));
+      } else if (type === 'error') {
+        setError("Worker Error: " + e.data.message);
+        setIsComputing(false);
+        workerRef.current.terminate();
       }
     };
   };
